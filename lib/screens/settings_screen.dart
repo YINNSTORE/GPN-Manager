@@ -27,27 +27,32 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           Card(
-            child: Column(
-              children: [
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.system,
-                  groupValue: mode,
-                  title: const Text('System'),
-                  onChanged: (v) => ref.read(themeModeProvider.notifier).setMode(v!),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: RadioGroup<ThemeMode>(
+                groupValue: mode,
+                onChanged: (ThemeMode? value) {
+                  if (value != null) {
+                    ref.read(themeModeProvider.notifier).setMode(value);
+                  }
+                },
+                child: const Column(
+                  children: [
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.system,
+                      title: Text('System'),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.light,
+                      title: Text('Light'),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      value: ThemeMode.dark,
+                      title: Text('Dark'),
+                    ),
+                  ],
                 ),
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.light,
-                  groupValue: mode,
-                  title: const Text('Light'),
-                  onChanged: (v) => ref.read(themeModeProvider.notifier).setMode(v!),
-                ),
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.dark,
-                  groupValue: mode,
-                  title: const Text('Dark'),
-                  onChanged: (v) => ref.read(themeModeProvider.notifier).setMode(v!),
-                ),
-              ],
+              ),
             ),
           ),
           const SizedBox(height: 18),
